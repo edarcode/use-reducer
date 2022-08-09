@@ -9,37 +9,49 @@ const initialState = {
 export const useCounter = () => {
 	const [counter, setCounter] = useState(initialState);
 
-	const { valueCounter, stepCounter: step, amountActionsCounter } = counter;
-
-	const addCounter = () => {
-		setCounter({
-			...counter,
-			valueCounter: valueCounter + step,
-			amountActionsCounter: amountActionsCounter + 1
-		});
-	};
-	const substractCounter = () => {
-		setCounter({
-			...counter,
-			valueCounter: valueCounter - step,
-			amountActionsCounter: amountActionsCounter + 1
-		});
-	};
-	const addStepCounter = () => {
-		setCounter({
-			...counter,
-			stepCounter: step + 1
-		});
-	};
-	const resetCounter = () => {
-		setCounter(initialState);
+	const dispatch = action => {
+		const newState = getNewState(counter, action);
+		setCounter(newState);
 	};
 
 	return {
 		...counter,
-		addCounter,
-		substractCounter,
-		addStepCounter,
-		resetCounter
+		dispatch
 	};
+};
+
+const getNewState = (counter, action) => {
+	const { valueCounter, stepCounter, amountActionsCounter } = counter;
+	let newState = null;
+
+	switch (action) {
+		case "addCounter":
+			newState = {
+				...counter,
+				valueCounter: valueCounter + stepCounter,
+				amountActionsCounter: amountActionsCounter + 1
+			};
+			break;
+		case "substractCounter":
+			newState = {
+				...counter,
+				valueCounter: valueCounter - stepCounter,
+				amountActionsCounter: amountActionsCounter + 1
+			};
+			break;
+		case "addStepCounter":
+			newState = {
+				...counter,
+				stepCounter: stepCounter + 1
+			};
+			break;
+		case "resetCounter":
+			newState = initialState;
+			break;
+
+		default:
+			throw TypeError("err action");
+	}
+
+	return newState;
 };
