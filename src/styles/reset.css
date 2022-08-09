@@ -58,7 +58,6 @@ a {
 	text-decoration: none;
 }
 
-a,
-button {
+a {
 	color: inherit;
 }
