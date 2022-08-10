@@ -1,29 +1,18 @@
-import { useReducer } from "react";
-
-const initialState = {
+export const initialStateCounter = {
 	valueCounter: 0,
 	stepCounter: 1,
 	amountActionsCounter: 0
 };
 
-export const useCounter = () => {
-	const [counter, dispatch] = useReducer(reducerCounter, initialState);
-
-	return {
-		...counter,
-		dispatch
-	};
-};
-
-const reducerCounter = (counter, action) => {
+export const reducerCounter = (counter, { type, payload }) => {
 	const { valueCounter, stepCounter, amountActionsCounter } = counter;
 	let newState = null;
 
-	switch (action) {
+	switch (type) {
 		case "addCounter":
 			newState = {
 				...counter,
-				valueCounter: valueCounter + stepCounter,
+				valueCounter: valueCounter + payload,
 				amountActionsCounter: amountActionsCounter + 1
 			};
 			break;
@@ -41,7 +30,7 @@ const reducerCounter = (counter, action) => {
 			};
 			break;
 		case "resetCounter":
-			newState = initialState;
+			newState = initialStateCounter;
 			break;
 
 		default:
