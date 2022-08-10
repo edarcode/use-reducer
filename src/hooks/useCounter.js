@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer } from "react";
 
 const initialState = {
 	valueCounter: 0,
@@ -7,12 +7,7 @@ const initialState = {
 };
 
 export const useCounter = () => {
-	const [counter, setCounter] = useState(initialState);
-
-	const dispatch = action => {
-		const newState = getNewState(counter, action);
-		setCounter(newState);
-	};
+	const [counter, dispatch] = useReducer(reducerCounter, initialState);
 
 	return {
 		...counter,
@@ -20,7 +15,7 @@ export const useCounter = () => {
 	};
 };
 
-const getNewState = (counter, action) => {
+const reducerCounter = (counter, action) => {
 	const { valueCounter, stepCounter, amountActionsCounter } = counter;
 	let newState = null;
 
