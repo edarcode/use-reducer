@@ -6,36 +6,31 @@ export const initialStateCounter = {
 
 export const reducerCounter = (counter, { type, payload }) => {
 	const { valueCounter, stepCounter, amountActionsCounter } = counter;
-	let newState = null;
-
 	switch (type) {
 		case "addCounter":
-			newState = {
+			return {
 				...counter,
 				valueCounter: valueCounter + payload,
 				amountActionsCounter: amountActionsCounter + 1
 			};
-			break;
+
 		case "substractCounter":
-			newState = {
+			return {
 				...counter,
 				valueCounter: valueCounter - stepCounter,
 				amountActionsCounter: amountActionsCounter + 1
 			};
-			break;
+
 		case "addStepCounter":
-			newState = {
+			return {
 				...counter,
 				stepCounter: stepCounter + 1
 			};
-			break;
+
 		case "resetCounter":
-			newState = initialStateCounter;
-			break;
+			return initialStateCounter;
 
 		default:
 			throw TypeError("err action");
 	}
-
-	return newState;
 };
